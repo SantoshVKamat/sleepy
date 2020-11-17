@@ -1,0 +1,39 @@
+<h1>Inventory management system</h1>
+</br>
+<html>
+<head>
+<style>
+table, th, td {
+  border: 1px solid black;
+}
+</style>
+</head>
+<body>
+
+<table>
+	<tr>
+		<th> Sku Code </th>
+		<th> Product name </th>
+		<% @products[1].warehouses.each do |warehouse| %>
+			<th>  <%= warehouse.wh_name %>'s item count</th>
+			<th>  <%= warehouse.wh_name %>'s min. threshold </th>
+		<% end %>
+	</tr>		
+	
+	<% @products.each do |product| %>
+		<tr>
+			<td> <%= link_to product.sku_code, edit_product_path(product.id) %> </td>
+			<td> <%= product.product_name %> </td>
+			<% product.warehouses.each do |warehouse| %>
+				<% @inventory = Inventory.find_by(warehouse_id: warehouse.id , product_id: product.id) %>
+				<% if (@inventory.item_count < @inventory.low_item_threshold) %>
+					<td bgcolor="red">
+				<% else %>
+					<td>
+				<% end %>
+				<%= @inventory.item_count %>  </td>
+				<td> <%= @inventory.low_item_threshold %> </td>
+			<% end %>		
+		</tr>
+	<% end %>
+</table>

@@ -1,0 +1,44 @@
+<h1>Edit the product </h1>
+
+
+<%= form_with(model: @product, local: true) do |form| %>
+
+ 
+
+  <%= form.fields_for :inventories do |inventories_form| %>
+    <% @product.warehouses.each do |abc| %>
+      <%= abc.wh_name %>
+    <% end %> 
+      <%= inventories_form.warehouses.wh_name %>
+      <li>
+        <%= inventories_form.label :item_count %>
+        <%= inventories_form.text_field :item_count %>
+
+        <%= inventories_form.label :low_item_threshold %>
+        <%= inventories_form.text_field :low_item_threshold %>
+      </li>
+  <% end %>
+
+ <!--  <div class="form-group row">
+          <%#= f.label :item_count, class: "col-3 col-form-label" %>
+          <div class="col-9">   
+              <%#= f.text_field :item_count, class: "form-control shadow rounded", placeholder: "Enter the product count" %>
+          </div>  
+        </div>
+
+        <div class="form-group row">
+          <%#= f.label :low_item_threshold, class: "col-3 col-form-label" %> </br>
+          <div class="col-9">
+            <%#= f.text_field :low_item_threshold, rows:9, class: "form-control shadow rounded", placeholder: "Minimum threshold of the product" %>
+          </div>
+  </div> -->
+            
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+
+
+
+<%#= link_to 'Back', varehouses_path %>
